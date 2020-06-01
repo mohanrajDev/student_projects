@@ -1,0 +1,33 @@
+$not_found = FALSE;
+        if (isset ($_GET['path'])) {
+
+            $tokens = explode('/', rtrim($_GET['path'], '/'));
+            $controllerName = ucfirst(array_shift($tokens)) . 'Controller';
+            
+            if (file_exists('Controllers/'.$controllerName.'.php')) {
+                $controllerName = "\\App\\Controller\\$controllerName";
+                $controller = new $controllerName();
+
+                if (!empty($tokens)) {
+					$actionName = array_shift($tokens);
+					if (method_exists ( $controller , $actionName )) {
+						$controller->{$actionName}(@$tokens);	
+					}
+					else {
+						$not_found = TRUE;
+					}
+                } else {
+					$controller->index();
+				}	
+                
+            } else {
+                $not_found =  TRUE;
+            }
+        } else {
+            $controller = new \App\Controller\HomeController();
+            $controller->index();
+        }
+
+        if ( $not_found ) {
+			throw new Exception('Route not found');
+		}
