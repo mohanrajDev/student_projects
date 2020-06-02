@@ -4,17 +4,12 @@ namespace App;
 
 use PDO;
 
+/**
+ * PDO Connection
+ */
 class Database {
 
     protected static $connection;
-
-    protected $host = 'localhost';
-    protected $port = '3306';
-    protected $username = '';
-    protected $password = '';
-    protected $database = '';
-    protected $charset = 'UTF-8';
-
 
     public function __construct(){
     

@@ -9,6 +9,9 @@ use App\Controller as BaseController;
 
 class SubscribeController extends BaseController{
 
+    /**
+     * Report Lists
+     */
     public function index()
     {
         $studentModel = new Report();
@@ -17,6 +20,9 @@ class SubscribeController extends BaseController{
         $this->view('subscribe_lists', $student_courses);
     }
 
+    /**
+     * Subscribe Form
+     */
     public function form()
     {
         $studentModel = new Student();
@@ -33,24 +39,30 @@ class SubscribeController extends BaseController{
         $this->view('subscribe_form', $data);
     }
 
+    /**
+     * Save the subscription info
+     * @param $subscribe
+     */
     public function store()
     {
         $student_id = $_POST['student_id'];
         $course_id = $_POST['course_id'];
 
         $model = new Report();
-    
-        $result = $model->find($student_id, $course_id);
-        if (
-            (isset($result->course_id) != $course_id)
-            && 
-            (isset($result->student_id) != $student_id)            
-        ) {
+
+        $result = $model->select(['course_id'])->where('student_id', '=', $student_id)->get();
+
+         $course_exists = [];
+         foreach($result as $data) {
+            $course_exists[] = (int) $data['course_id'];
+         }
+
+         if (!in_array($course_id ,$course_exists )) {
             $result = $model->insert([
                 'student_id' => $student_id,
                 'course_id' => $course_id
             ]);
-        }
+         } 
 
         if($result) {
             header("Location: /subscribe");

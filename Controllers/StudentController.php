@@ -7,6 +7,9 @@ use App\Model\Student;
 
 class StudentController extends BaseController {
 
+    /**
+     * Student lists
+     */
     public function index()
     {
         $model = new Student();
@@ -14,11 +17,18 @@ class StudentController extends BaseController {
         $this->view('student_lists', $students);
     }
 
+    /**
+     * Student Form
+     */
     public function form()
     {
         $this->view('student_form');
     }
 
+    /**
+     * Student Store
+     * @param $student
+     */
     public function store()
     {        
         $first_name = $_POST['first_name'];
@@ -41,7 +51,11 @@ class StudentController extends BaseController {
         }
     }
 
-
+    /**
+     * Student Edit Form
+     * @param $student
+     * @param $id
+     */
     public function edit($id)
     {
         $model = new Student();
@@ -49,6 +63,11 @@ class StudentController extends BaseController {
         $this->view('student_edit', $student);
     }
 
+    /**
+     * Student update
+     * @param $id
+     * @param $student
+     */
     public function update($id)
     {            
         $first_name = $_POST['first_name'];
@@ -71,6 +90,10 @@ class StudentController extends BaseController {
         }
     }
 
+    /**
+     * Delete Student
+     * @param $id
+     */
     public function delete($id)
     {
         $model = new Student();

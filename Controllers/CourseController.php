@@ -7,6 +7,9 @@ use App\Model\Course;
 
 class CourseController extends BaseController {
 
+    /**
+     * Courses list
+     */
     public function index()
     {
         $model = new Course();
@@ -14,11 +17,18 @@ class CourseController extends BaseController {
         $this->view('course_lists', $courses);
     }
 
+    /**
+     * New Course Form
+     */
     public function form()
     {
         $this->view('course_form');
     }
 
+    /**
+     * Course Store
+     * @param $course
+     */
     public function store()
     {        
         $name = $_POST['name'];
@@ -36,6 +46,10 @@ class CourseController extends BaseController {
         }
     }
 
+    /**
+     * Edit Course 
+     * @param $id
+     */
     public function edit($id)
     {
         $model = new Course();
@@ -43,6 +57,11 @@ class CourseController extends BaseController {
         $this->view('course_edit', $course);
     }
 
+    /**
+     * Update Course
+     * @param $id
+     * @param $course
+     */
     public function update($id)
     {
         $name = $_POST['name'];
@@ -60,6 +79,10 @@ class CourseController extends BaseController {
         }
     }
 
+    /**
+     * Delete the Course
+     * @param $id
+     */
     public function delete($id)
     {
         $model = new Course();

@@ -3,6 +3,11 @@ namespace App;
 
 use Exception;
 
+/***
+ * Base Controller
+ * Loading view
+ */
+
 class Controller {
     public function view($viewName, $data = [])
     {

@@ -10,7 +10,10 @@ class Model extends Database{
 
     public $db;
     public $query;
+
+    // Table Name
     protected $table;
+
     protected $select = '*';
     protected $where = [];
     protected $orwhere = [];
@@ -23,12 +26,18 @@ class Model extends Database{
         $this->query = "SELECT";
     }
 
+    /**
+     * Select Query
+     */
     public function select($colums = ['*'])
     {
         $this->select = implode(',', $colums);
         return $this;
     }
 
+    /**
+     * Get Single Row
+     */
     public function find($id)
     {
         try {
@@ -41,6 +50,9 @@ class Model extends Database{
         }
     }
 
+    /**
+     * Get the all rows
+     */
     public function get()
     {
         $this->query = "$this->query $this->select FROM $this->table";
@@ -71,12 +83,18 @@ class Model extends Database{
         return $result;
     }
 
+    /**
+     * Where Condition
+     */
     public function where($name, $operator = '=', $value)
     {
         $this->where[] = [$name, $operator, $value];
         return $this;
     }
 
+    /**
+     * Order By 
+     */
     public function orderBy($column, $direction ='ASC')
     {
         $this->order_by = $column;
@@ -84,6 +102,9 @@ class Model extends Database{
         return $this;
     }
 
+    /**
+     * Inset table data
+     */
     public function insert(array $data)
     {
         $columns =  array_keys($data);
@@ -105,6 +126,9 @@ class Model extends Database{
         return $result;
     }
 
+    /**
+     * Update table data
+     */
     public function update($id, array $data)
     {
         $columns =  array_keys($data);
@@ -125,6 +149,9 @@ class Model extends Database{
         return $result;
     }
 
+    /**
+     * Delete the row
+     */
     public function delete($id)
     {
         $sql = "DELETE FROM $this->table WHERE id=?";
@@ -138,6 +165,9 @@ class Model extends Database{
         return $result;
     }
 
+    /**
+     * Pagination 
+     */
     public function paginate($per_page = 4)
     {
         $offset = 0;

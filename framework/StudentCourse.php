@@ -5,6 +5,10 @@ namespace App;
 use App\Controller;
 use Exception;
 
+/**
+ * Main app 
+ * Route handing
+ */
 class StudentCourse {
 
     public $url;
