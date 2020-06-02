@@ -159,13 +159,17 @@ class Model extends Database{
         $total_rows = $result_total->fetchColumn();
         $last_page = (int) round(ceil(($total_rows / $per_page)));
 
-        $this->query = " select * from $this->table limit $offset, $per_page";
-        $statement = $this->db->prepare($this->query);
-        $statement->execute();
-        $result  = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        if (!$result) {
-            throw new Exception($this->db->errorInfo());
+        if ($total_rows) {
+            $this->query = " select * from $this->table limit $offset, $per_page";
+            $statement = $this->db->prepare($this->query);
+            $statement->execute();
+            $result  = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (!$result) {
+                throw new Exception($this->db->errorInfo());
+            }
+        } else {
+            $result = [];
         }
 
         $path = 'http://'.$_SERVER['HTTP_HOST']. '/' . substr(strtolower($this->table), 0 , -1);
